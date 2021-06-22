@@ -1,0 +1,40 @@
+{
+  "name": "nlwvaloriza",
+  "version": "1.0.0",
+  "description": "Api nodejs with typescript for nlw6",
+  "main": "dist/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "nodemon ./dist/server.js",
+    "test": "test",
+    "tsc": "tsc",
+    "dev": "ts-node-dev ./src/server.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel1680/nlwValoriza.git"
+  },
+  "author": "Gabriel Pedersoli Lopes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabriel1680/nlwValoriza/issues"
+  },
+  "homepage": "https://github.com/gabriel1680/nlwValoriza#readme",
+  "devDependencies": {
+    "@types/typescript": "^2.0.0",
+    "nodemon": "^2.0.7",
+    "ts-node-dev": "^1.1.6",
+    "tsc": "^2.0.3",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.12",
+    "express": "^4.17.1",
+    "mariadb": "^2.5.4",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "type": "^2.5.0",
+    "typeorm": "^0.2.34"
+  }
+}
