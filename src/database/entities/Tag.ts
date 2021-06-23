@@ -1,4 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+export interface ITag
+{
+    name: string;
+}
 
 @Entity("tags")
 export class Tag

@@ -1,42 +1,23 @@
 import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
-import { Email } from "../database/Email";
-import { UserRepository } from "../repositories/UserRespository";
-import { UserServices } from "../services/UserServices";
+import UserRepository from "../repositories/UserRespository";
 
-export class UserController 
+export default class UserController 
 {
-    public async create(req: Request, res: Response)
+    public async create(req: Request, res: Response): Promise<Response>
     {
-        // const { name, email, isAdmin } = req.body;
-        // const userRepository = getCustomRepository(UserRepository);
-        // try {
-        //     const user = await userRepository.createAndSave(name, (new Email(email)), isAdmin);
-        //     return res.json(user);
-        // } catch (error) {
-        //     res.statusCode = 401;
-        //     res.statusMessage = "Forbidden";
-        //     res.json(error.message);
-        // }
-
         const { name, email, isAdmin } = req.body;
-        const userServices = new UserServices();
-        try {
-            const user = await userServices.create({
-                name: name,
-                email: new Email(email),
-                isAdmin: isAdmin
-            });
-            return res.json(user);
+        const userRepository = getCustomRepository(UserRepository);
+        const user = await userRepository.createAndSave({
+            name: name,
+            email: email,
+            isAdmin: isAdmin
+        });
 
-        } catch (error) {
-            res.statusCode = 401;
-            res.statusMessage = "Forbidden";
-            res.json(error.message);
-        }
+        return res.status(201).json(user);
     }
 
-    public async findById(req: Request, res: Response)
+    public async findById(req: Request, res: Response): Promise<Response>
     {
         const { id } = req.params;
 
@@ -46,19 +27,27 @@ export class UserController
         return res.json(user);
     }
 
-    public async find(req: Request, res: Response)
+    public async find(req: Request, res: Response): Promise<Response>
     {
         const userRepository = getCustomRepository(UserRepository);
+        const queryParams = req.query;
+        const hasId = Object.keys(queryParams).indexOf('id') !== -1;
 
-        if (!req.query) {
-            const users = await userRepository.findAll();
-            res.json(users);
-            return;
+        if (hasId) {
+            //@ts-ignore
+            const user = await userRepository.findById(queryParams.id);
+            return res.json(user);
+        }
+        const hasEmail = Object.keys(queryParams).indexOf('email') !== -1;
+
+        if (hasEmail) {
+            const email = queryParams.email;
+            //@ts-ignore
+            const user = await userRepository.findByEmail(email);
+            return res.json(user);
         }
 
-        /**
-         * TODO IMPLEMENTAR AS QUERIES
-         */
-        return res.json();
+        const users = await userRepository.findAll();
+        return res.json(users);
     }
 }

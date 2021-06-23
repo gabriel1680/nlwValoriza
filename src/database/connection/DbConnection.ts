@@ -1,8 +1,9 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
-const connection = {
-    async tryOpen(): Promise<void>
+export default class DbCnnection
+{
+    public static async tryToConnect(): Promise<void>
     {
         try {
             const { isConnected, options } = await createConnection();
@@ -11,7 +12,6 @@ const connection = {
         } catch (error) {
             console.error(`Database connection error: ${error.message}`);
         }
-    },
-};
+    }
+}
 
-export default connection;

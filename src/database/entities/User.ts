@@ -1,6 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Repository, UpdateDateColumn } from "typeorm";
-import { Email } from "../database/Email";
-import { UserRepository } from "../repositories/UserRespository";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+export interface IUser
+{
+    name: string;
+    email: string;
+    isAdmin?: boolean;
+}
 
 @Entity("users")
 export class User
