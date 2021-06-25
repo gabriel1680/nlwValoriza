@@ -1,25 +1,17 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-export interface IUser
-{
-    name: string;
-    email: string;
-    isAdmin?: boolean;
-}
-
-@Entity("users")
-export class User
+@Entity("tags")
+export class Tag
 {
     @PrimaryGeneratedColumn()
-    public readonly id: string;
+    public readonly id: number;
+
     @Column()
     public name: string;
-    @Column()
-    public email: string;
-    @Column()
-    public isAdmin: boolean;
+
     @CreateDateColumn()
     public created_at: Date;
+
     @UpdateDateColumn()
     public updated_at: Date;
 }

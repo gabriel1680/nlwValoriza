@@ -5,10 +5,10 @@
     "username": "root",
     "password": "123",
     "database": "nlwValorizaDatabase",
-    "entities": ["src/database/entities/*.ts"], 
+    "entities": ["src/entities/*.ts"], 
     "migrations": ["src/database/migrations/*.ts"],
     "cli": {
         "migrationsDir": "src/database/migrations",
-        "entitiesDir": "src//database/entities"
+        "entitiesDir": "src/entities"
     }
 }

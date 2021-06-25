@@ -1,12 +1,18 @@
+import UserAuthController from "../controllers/userControllers/UserAuthController";
 import { Router } from "express";
-import UserController from "../controllers/UserController";
+import UserCreateController from "../controllers/userControllers/UserCreateController";
+import UserFindController from "../controllers/userControllers/UserFindController";
 
 const userRoutes = Router();
 
-const userController = new UserController();
+//CREATE
+userRoutes.post("/", UserCreateController.handle);
 
-userRoutes.post("/", userController.create);
-userRoutes.get("/", userController.find);
-userRoutes.get("/:id", userController.findById);
+//AUTH
+userRoutes.post("/auth", UserAuthController.handle);
+
+//READ
+userRoutes.get("/", UserFindController.find);
+userRoutes.get("/:id", UserFindController.findById);
 
 export default userRoutes;

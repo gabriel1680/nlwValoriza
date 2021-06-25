@@ -4,7 +4,7 @@ import { Message } from "../core/Message";
 
 export default class ErrorHandler
 {
-    public static handle(error: Error, req: Request, res: Response, next: NextFunction)
+    public static handle(error: Error, req: Request, res: Response, next: NextFunction): Response
     {
         const msg = new Message();
 

@@ -3,7 +3,6 @@ export class Message
     private status: string;
     private message: string;
 
-
     public blank(status: string, message: string): Message
     {
         this.status = status;

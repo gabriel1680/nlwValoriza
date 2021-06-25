@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import { UnauthorizedError } from "../core/customErrors";
 
-export default class Authentication
+export default class Auth
 {
-    public static admin(req: Request, res: Response, next: NextFunction)
+    public static adminHandle(req: Request, res: Response, next: NextFunction)
     {
         const isAdmin = true;
 

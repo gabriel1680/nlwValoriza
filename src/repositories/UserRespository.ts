@@ -1,24 +1,21 @@
-import { EntityRepository, AbstractRepository } from "typeorm";
-import Email from "../database/types/Email";
-import { Factory } from "../factories/Factory";
-import { IUser, User } from "../database/entities/User";
-import { BadRequestError } from "../core/customErrors";
+import { EntityRepository, AbstractRepository, getCustomRepository } from "typeorm";
+import { UserFactory } from "../factories/UserFactory";
+import { User } from "../entities/User";
+
+export interface IUser
+{
+    name: string;
+    email: string;
+    password: string;
+    isAdmin?: boolean;
+}
 
 @EntityRepository(User)
 export default class UserRepository extends AbstractRepository<User>
 {
-    public async createAndSave({ name, email, isAdmin }: IUser): Promise<User>
+    public async createAndSave(userRequest: IUser): Promise<User>
     {
-        const validEmail = new Email(email);
-
-        const user = Factory.createUser(name, validEmail, isAdmin);
-
-        if (!name) throw new BadRequestError("Nome inválido!");
-
-        const emailExists = await this.findByEmail(validEmail.address);
-
-        if (emailExists) throw new BadRequestError("Endereço de email já cadastrado!");
-
+        const user = UserFactory.create(userRequest);
         return this.manager.save(user);
     }
 
@@ -34,8 +31,7 @@ export default class UserRepository extends AbstractRepository<User>
 
     public findByEmail(email: string): Promise<User>
     {
-        const validEmail = new Email(email);
-        return this.manager.findOne(User, { email: validEmail.address });
+        return this.manager.findOne(User, { email: email });
     }
 
     public findByName(name: string): Promise<User>

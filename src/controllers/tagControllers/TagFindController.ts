@@ -1,18 +1,9 @@
 import { Request, Response } from "express";
 import { getCustomRepository } from "typeorm";
-import TagRepository from "../repositories/TagRepository";
+import TagRepository from "../../repositories/TagRepository";
 
-export default class TagController 
+export default class TagFindController 
 {
-    public async create(req: Request, res: Response): Promise<Response>
-    {
-        const { name } = req.body;
-        const tagRepository = getCustomRepository(TagRepository);
-        const tag = await tagRepository.createAndSave({ name: name, });
-
-        return res.status(201).json(tag);
-    }
-
     public async findById(req: Request, res: Response): Promise<Response>
     {
         const { id } = req.params;

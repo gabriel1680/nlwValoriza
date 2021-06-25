@@ -1,5 +1,11 @@
 # ENTIDADES
 
 # User
-☐ Adicionar um tipo Email à propriedade email
+✔ Adicionar um tipo Email à propriedade email @done(21-06-24 22:24)
 
+#PROBLEMAS
+✔ Arrumar conexão com o banco de dados @done(21-06-24 22:24)
+
+##Controllers
+#UserControllers E TagControllers
+☐ Arrumar o controller de busca

@@ -6,11 +6,11 @@ export default class Email
 
     constructor (address: string)
     {
-        if (!this.isEmail(address)) throw new BadRequestError("Email inválido!");
+        if (!Email.isEmail(address)) throw new Error("Ivalid email");
         this._address = address;
     }
 
-    public isEmail(address: string): boolean
+    public static isEmail(address: string): boolean
     {
         const isNotValidAddress = address.indexOf("@") === -1 || address.indexOf(".com") === -1 || address.length < 8;
 

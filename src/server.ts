@@ -1,7 +1,7 @@
 import express from "express";
 import "express-async-errors";
 import routes from "./routes/routes";
-import DbCnnection from "./database/connection/DbConnection";
+import DbCnnection from "./database/DbConnection";
 import ErrorHandler from "./middlewares/ErrorHandler";
 
 DbCnnection.tryToConnect().finally();

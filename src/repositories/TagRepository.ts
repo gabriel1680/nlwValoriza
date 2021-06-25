@@ -1,21 +1,19 @@
 import { EntityRepository, AbstractRepository } from "typeorm";
-import { Factory } from "../factories/Factory";
-import { ITag, Tag } from "../database/entities/Tag";
+import { TagFactory } from "../factories/TagFactory";
+import { Tag } from "../entities/Tag";
 import { BadRequestError } from "../core/customErrors";
+
+export interface ITag
+{
+    name: string;
+}
 
 @EntityRepository(Tag)
 export default class TagRepository extends AbstractRepository<Tag>
 {
     public async createAndSave({ name }: ITag): Promise<Tag>
     {
-        const Tag = Factory.createTag(name);
-
-        if (!name) throw new BadRequestError("Nome inválido!");
-
-        const tagExists = await this.findByName(name);
-
-        if (tagExists) throw new BadRequestError("A informada já foi cadastrada!");
-
+        const Tag = TagFactory.create(name);
         return this.manager.save(Tag);
     }
 

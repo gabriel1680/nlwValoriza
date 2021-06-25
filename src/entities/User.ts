@@ -1,19 +1,26 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-export interface ITag
-{
-    name: string;
-}
-
-@Entity("tags")
-export class Tag
+@Entity("users")
+export class User
 {
     @PrimaryGeneratedColumn()
-    public readonly id: number;
+    public readonly id: string;
+
     @Column()
     public name: string;
+
+    @Column()
+    public email: string;
+
+    @Column()
+    public password: string;
+
+    @Column()
+    public isAdmin: boolean;
+
     @CreateDateColumn()
     public created_at: Date;
+
     @UpdateDateColumn()
     public updated_at: Date;
 }
