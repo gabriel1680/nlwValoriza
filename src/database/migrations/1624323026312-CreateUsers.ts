@@ -10,10 +10,8 @@ export class CreateUsers1624323026312 implements MigrationInterface
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "varchar",
                         isPrimary: true,
-                        isGenerated: true,
-                        generationStrategy: "increment",
                     },
                     {
                         name: "name",

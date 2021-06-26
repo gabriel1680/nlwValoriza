@@ -1,7 +1,5 @@
 import { EntityRepository, AbstractRepository } from "typeorm";
-import { TagFactory } from "../factories/TagFactory";
-import { Tag } from "../entities/Tag";
-import { BadRequestError } from "../core/customErrors";
+import { Tag } from "@entities/Tag";
 
 export interface ITag
 {
@@ -13,8 +11,10 @@ export default class TagRepository extends AbstractRepository<Tag>
 {
     public async createAndSave({ name }: ITag): Promise<Tag>
     {
-        const Tag = TagFactory.create(name);
-        return this.manager.save(Tag);
+        const tag = new Tag();
+        tag.name = name;
+
+        return this.manager.save(tag);
     }
 
     public findAll(): Promise<Tag[]>

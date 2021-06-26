@@ -78,3 +78,6 @@ typings/
 # Configurations
 .json
 .lock
+
+#Todo
+.todo

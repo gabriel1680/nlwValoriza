@@ -11,22 +11,20 @@ export class CreateCompleices1624327387570 implements MigrationInterface
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "varchar",
                         isPrimary: true,
-                        isGenerated: true,
-                        generationStrategy: "increment",
                     },
                     {
                         name: "user_sender",
-                        type: "int",
+                        type: "varchar",
                     },
                     {
                         name: "user_receiver",
-                        type: "int"
+                        type: "varchar"
                     },
                     {
                         name: "tag_id",
-                        type: "int"
+                        type: "varchar"
                     },
                     {
                         name: "message",

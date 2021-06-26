@@ -1,6 +1,6 @@
-import { EntityRepository, AbstractRepository, getCustomRepository } from "typeorm";
-import { UserFactory } from "../factories/UserFactory";
-import { User } from "../entities/User";
+import { EntityRepository, AbstractRepository } from "typeorm";
+import { User } from "@entities/User";
+import Email from "@services/utils/Email";
 
 export interface IUser
 {
@@ -13,9 +13,14 @@ export interface IUser
 @EntityRepository(User)
 export default class UserRepository extends AbstractRepository<User>
 {
-    public async createAndSave(userRequest: IUser): Promise<User>
+    public async createAndSave({ name, email, password, isAdmin = false }: IUser): Promise<User>
     {
-        const user = UserFactory.create(userRequest);
+        const user = new User();
+        user.name = name;
+        user.email = email;
+        user.password = password;
+        user.isAdmin = isAdmin;
+
         return this.manager.save(user);
     }
 

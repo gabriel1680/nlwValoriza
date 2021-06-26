@@ -1,21 +1,25 @@
 import { AbstractRepository, EntityRepository } from "typeorm";
-import { Compliment } from "../entities/Compliment";
-import ComplimentFactory from "../factories/ComplimentFactory";
+import { Compliment } from "@entities/Compliment";
 
 interface ICompliment
 {
-    tagId: number,
-    userSenderId: number,
-    userReceiverId: number,
+    tagId: string,
+    userSenderId: string,
+    userReceiverId: string,
     message: string;
 }
 
 @EntityRepository(Compliment)
 export default class ComplimentRepository extends AbstractRepository<Compliment>
 {
-    public async createAndSave(object: ICompliment): Promise<Compliment>
+    public async createAndSave({ tagId, userSenderId, userReceiverId, message }: ICompliment): Promise<Compliment>
     {
-        const compliment = ComplimentFactory.create(object);
+        const compliment = new Compliment();
+        compliment.tag_id = tagId;
+        compliment.user_sender = userSenderId;
+        compliment.user_receiver = userReceiverId;
+        compliment.message = message;
+
         return await this.manager.save(compliment);
     }
 
@@ -29,23 +33,18 @@ export default class ComplimentRepository extends AbstractRepository<Compliment>
         return this.manager.findOne(Compliment, id);
     }
 
-    public findByMessage(message: string): Promise<Compliment>
+    public findByTagId(id: string): Promise<Compliment[]>
     {
-        return this.manager.findOne(Compliment, { message: message });
+        return this.manager.find(Compliment, { tag_id: id });
     }
 
-    public findBySenderId(id: number): Promise<Compliment[]>
+    public findBySenderId(id: string): Promise<Compliment[]>
     {
         return this.manager.find(Compliment, { user_sender: id });
     }
 
-    public findByReceiverId(id: number): Promise<Compliment[]>
+    public findByReceiverId(id: string): Promise<Compliment[]>
     {
         return this.manager.find(Compliment, { user_receiver: id });
-    }
-
-    public findByTagId(id: number): Promise<Compliment[]>
-    {
-        return this.manager.find(Compliment, { tag_id: id });
     }
 }

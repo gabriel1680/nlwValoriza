@@ -1,10 +1,12 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Expose } from "class-transformer";
+import { v4 as uuid } from "uuid";
 
 @Entity("tags")
 export class Tag
 {
-    @PrimaryGeneratedColumn()
-    public readonly id: number;
+    @PrimaryColumn()
+    public readonly id: string;
 
     @Column()
     public name: string;
@@ -14,4 +16,16 @@ export class Tag
 
     @UpdateDateColumn()
     public updated_at: Date;
+
+    @Expose({ name: "custom_name" })
+    public customName(): string
+    {
+        return `#${this.name}`;
+    }
+
+    constructor ()
+    {
+        if (!this.id)
+            this.id = uuid();
+    }
 }

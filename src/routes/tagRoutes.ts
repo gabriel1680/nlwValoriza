@@ -1,13 +1,13 @@
 import { Router } from "express";
-import TagController from "../controllers/tagControllers/TagCreateController";
-import Auth from "../middlewares/Auth";
+import CreateTagController from "@controllers/create/CreateTagController";
+import Auth from "@middlewares/Auth";
+import FindTagByIdController from "@controllers/find/FindTagByIdController";
+import FindTagByQueryController from "@controllers/find/FindTagByQueryController";
 
 const tagRoutes = Router();
 
-const tagController = new TagController();
-
-tagRoutes.post("/", Auth.adminHandle, tagController.create);
-// tagRoutes.get("/:id", tagController.findById);
-// tagRoutes.get("/", tagController.find);
+tagRoutes.post("/", Auth.authHandle, Auth.adminHandle, CreateTagController.handle);
+tagRoutes.get("/:id", Auth.authHandle, FindTagByIdController.handle);
+tagRoutes.get("/", Auth.authHandle, FindTagByQueryController.handle);
 
 export default tagRoutes;

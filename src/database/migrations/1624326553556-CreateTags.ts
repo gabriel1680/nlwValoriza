@@ -10,10 +10,8 @@ export class CreateTags1624326553556 implements MigrationInterface
                 columns: [
                     {
                         name: "id",
-                        type: "int",
+                        type: "varchar",
                         isPrimary: true,
-                        isGenerated: true,
-                        generationStrategy: "increment",
                     },
                     {
                         name: "name",

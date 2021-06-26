@@ -1,22 +1,26 @@
 import { Request, Response, NextFunction } from "express";
-import { CustomError } from "../core/customErrors";
-import { Message } from "../core/Message";
+import { IRequestError, RequestError } from "@requestErrors/RequestError";
+import { Message } from "@middlewares/utils/Message";
 
 export default class ErrorHandler
 {
     public static handle(error: Error, req: Request, res: Response, next: NextFunction): Response
     {
-        const msg = new Message();
+        if (error instanceof RequestError)
+            return ErrorHandler.buildAndSendError(res, error);
 
-        if (error instanceof CustomError)
-            return ErrorHandler.buildAndSend(res, error);
-
-        return res.status(500).json(msg.error('Internal Server Error'));
+        return ErrorHandler.buildAndSend(res, 500, "Internal Server Error");
     }
 
-    private static buildAndSend(res: Response, err: CustomError)
+    private static buildAndSendError(res: Response, err: IRequestError): Response
     {
         const msg = new Message();
-        return res.status(err.code).json(msg.byException(err));
+        return res.status(err.code).json(msg.error(err.message));
+    }
+
+    private static buildAndSend(res: Response, code: number, message: string): Response
+    {
+        const msg = new Message();
+        return res.status(code).json(msg.error(message));
     }
 }
